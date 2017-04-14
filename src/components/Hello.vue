@@ -1,15 +1,40 @@
 <template>
   <div class="hello">
-    <Nav></Nav>
-    <div class="song">
+    <CNav></CNav>
+    <div class="songs">
       <Toolbar></Toolbar>
-    </div>
+      <div class="container">
+        <div class="content">
+          <div class="songs-row grid">
+              <Card></Card>
+              <Card></Card>
+              <Card></Card>
+              <Card></Card>
+              <Card></Card>
+              <Card></Card>
+              <Card></Card>
+              <Card></Card>
+              <Card></Card>
+              <Card></Card>
+              <Card></Card>
+              <Card></Card>
+              <Card></Card>
+              <Card></Card>
+              <Card></Card>
+              <Card></Card>
+              <Card></Card>
+              <Card></Card>
+          </div>
+        </div>
+      </div>
+    </div> 
   </div>
 </template>
 
 <script>
-import Nav from './Nav'
+import CNav from './Nav'
 import Toolbar from './Toolbar'
+import Card from './SongCard'
 export default {
   name: 'hello',
   data () {
@@ -18,8 +43,9 @@ export default {
     }
   },
   components: {
-    Nav,
-    Toolbar
+    CNav,
+    Toolbar,
+    Card
   }
 }
 </script>

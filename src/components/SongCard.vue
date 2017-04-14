@@ -1,7 +1,10 @@
 <template>
+<div class="col-1-5 clearfix">
   <div class="card song-card">
-    <div class="song-card-img">
-      <div class="toogle-play-button"></div>
+    <div class="song-card-image" style="background-image: url(&quot;https://i1.sndcdn.com/artworks-000194346522-2zo05f-t300x300.jpg&quot;);">
+      <div class="toggle-play-button">
+        <i class="toggle-play-button-icon ion-ios-play"></i>
+      </div>
     </div>
     <div class="song-card-user">
       <img alt="user avatar" class="song-card-user-image" src="https://i1.sndcdn.com/avatars-000299487741-u4luk4-large.jpg">
@@ -14,6 +17,7 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>

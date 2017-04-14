@@ -5,7 +5,30 @@
 
 @import url('./toolbar/toolbar.less');
 
-.container {
-    width: 1170px;
-    margin: 0 auto;
+@import url('song-card.less');
+@import url('grid.less');
+@import url('./toggle-play-button/toggle-play-button.less');
+
+.songs {
+	background-color: #e3e3e3;
 }
+
+.card {
+    background-color: #fff;
+    border: 1px solid #e3e3e3;
+}
+
+.content {
+    margin: 20px 0 80px;
+}
+
+.sticky .content {
+    margin-top: 80px;
+}
+
+.songs-row {
+    & + .songs-row {
+        margin-top: 20px;
+    }
+}
+
