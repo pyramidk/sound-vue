@@ -1,8 +1,23 @@
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+@import url('reset.less');
+@import url('utils.less');
+@import url('./ionicons/ionicons.less');
+.container {
+    width: 1170px;
+    margin: 0 auto;
+}
+.nav {
+    height: 50px;
+    background-color: #3a3f41;
+
+    .container {
+        height: 100%;
+    }
+}
+
+.nav-logo {
+    display: inline-block;
+    padding: 11px 0;
+    color: #fff;
+    font-size: 20px;
+    float: left;
 }
