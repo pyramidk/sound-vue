@@ -27,7 +27,9 @@
           </div>
         </div>
       </div>
-    </div> 
+    </div>
+    <Player></Player>
+    </div>
   </div>
 </template>
 
@@ -35,6 +37,7 @@
 import CNav from './Nav'
 import Toolbar from './Toolbar'
 import Card from './SongCard'
+import Player from './Player'
 export default {
   name: 'hello',
   data () {
@@ -45,7 +48,8 @@ export default {
   components: {
     CNav,
     Toolbar,
-    Card
+    Card,
+    Player
   }
 }
 </script>
