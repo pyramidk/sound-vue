@@ -4,8 +4,28 @@
   		<div class="nav-logo">
   			<i class="icon ion-radio-waves"></i>
   		</div>
-  		<div class="nav-nav float-left">1</div>
-  		<div class="nav-nav float-right">2</div>
+  		<div class="nav-nav float-left">
+  			<div class="nav-nav-item">
+  				<a class="nav-nav-item-link active" href="/#/songs" title="">SoundRedux</a>
+  			</div>
+  		</div>
+  		<div class="nav-nav float-right">
+  			<div class="nav-nav-item">
+  				<div class="nav-search">
+  					<i class="icon ion-search"></i>
+  					<input type="text" class="nav-search-input" placeholder="SEARCH">
+  				</div>
+  			</div>
+  			<div class="nav-nav-item">
+  				<div class="nav-user popover">
+  					<div class="nav-user-link">
+  						<i class="icon ion-person"></i>
+  						<i class="icon ion-chevron-down"></i>
+  						<i class="icon ion-chevron-up"></i>
+  					</div>
+  				</div>
+  			</div>
+  	  </div>
   	</div>
   </div>
 </template>
