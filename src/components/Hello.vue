@@ -9,7 +9,7 @@
         </div>
       </div>
     </div>
-    <!-- <Player></Player> -->
+    <Player></Player>
     </div>
   </div>
 </template>

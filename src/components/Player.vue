@@ -1,6 +1,6 @@
 <template>
   <div class="player">
-  	<audio src="https://api.soundcloud.com/tracks/185991285/stream?client_id=e582b63d83a5fb2997d1dbf2f62705da"></audio>
+  	<audio :src="playNow + '?client_id=e582b63d83a5fb2997d1dbf2f62705da'" ref='audio'></audio>
     <div class="container">
       <div class="player-main">
         <div class="player-section player-info">
@@ -15,7 +15,8 @@
             <i class="icon ion-ios-rewind"></i>
           </div>
           <div class="player-button">
-            <i class="icon ion-ios-pause"></i>
+            <i v-show="!playStatus" class="icon ion-ios-play" ref="play-button" @click='play'></i>
+            <i v-show="playStatus" class="icon ion-ios-pause" ref="play-button" @click='pause'></i>
           </div>
           <div class="player-button">
             <i class="icon ion-ios-fastforward"></i>
@@ -67,12 +68,29 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
+    return {}
+  },
+  methods: {
+    play () {
+      console.log('playzhix')
+      this.$store.dispatch('test')
+      this.$refs.audio.play()
+      // this.playStatus = true
+    },
+    pause () {
+      this.$refs.audio.pause()
+      console.log('test')
+      this.playStatus = false
     }
-  }
+  },
+  computed: mapGetters([
+    'playNow',
+    'playStatus'
+  ])
 }
 </script>
 

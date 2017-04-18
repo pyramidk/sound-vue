@@ -1,8 +1,8 @@
 <template>
-  <div class="songs-row grid" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="100" infinite-scroll-immediate-check="false">
-    <div class="col-1-5" v-for="item in cardList">
+  <div class="songs-row grid" v-infinite-scroll="loadMore" infinite-scroll-disabled="scrollLoading" infinite-scroll-distance="10" infinite-scroll-immediate-check="false">
+    <div class="col-1-5 clearfix" v-for="(item, index) in cardList" :index="index">
       <div class="card song-card">
-        <div class="song-card-image" :style="{ backgroundImage: 'url(' + item.artwork_url + ')'}">
+        <div class="song-card-image" :style="{ backgroundImage: 'url(' + item.artwork_url + ')'}" @click='playHandler(index)'>
           <div class="toggle-play-button">
             <i class="toggle-play-button-icon ion-ios-play"></i>
           </div>
@@ -27,19 +27,25 @@ import { mapGetters } from 'vuex'
 
 export default {
   data () {
-    return {
-      busy: false
-    }
+    return {}
   },
   methods: {
     loadMore: function () {
-      this.busy = false
+      // console.log(this.$store.state)
+      // 不能多次loading
+      // this.busy = this.$store.state.card.scrollLoading
       this.$store.dispatch('loadMore')
       console.log('执行loadmore')
+    },
+    playHandler (index) {
+      this.$store.dispatch('play', index)
+      console.log(this)
+      this.$refs.audio.play()
     }
   },
   computed: mapGetters([
-    'cardList'
+    'cardList',
+    'scrollLoading'
   ])
 }
 </script>

@@ -1,26 +1,31 @@
 import * as types from '../mutation-types'
 
+// import {once} from '../../utils/FormatUtils'
+
 import axios from 'axios'
 
 // initial state
-// shape: [{ id, quantity }]
 const state = {
   cardList: [],
   nextHref: '',
-  nextData: []
+  nextData: [],
+  scrollLoading: false,
+  playNow: ''
 }
 
 // getters
 const getters = {
-  cardList: state => state.cardList
+  cardList: state => state.cardList,
+  scrollLoading: state => state.scrollLoading,
+  playNow: state => state.playNow
 }
 
 // actions
 const actions = {
   // mutation 不能异步；state要在mutation里修改
   getData: ({ commit }) => {
-    console.log('test')
-    axios.get('https://api.soundcloud.com/tracks?linked_partitioning=1&client_id=e582b63d83a5fb2997d1dbf2f62705da&limit=40&offset=0&tags=chill%20house').then(response => {
+    axios.get('https://api.soundcloud.com/tracks?linked_partitioning=1&client_id=e582b63d83a5fb2997d1dbf2f62705da&limit=10&offset=0&tags=chill%20house').then(response => {
+      console.log(response.data.collection)
       commit(types.CHANGE_DATA, {list: response.data.collection, href: response.data.next_href})
       commit(types.FORMAT_IMG_URL)
       commit(types.FORMAT_SONG_TITLE)
@@ -31,8 +36,8 @@ const actions = {
   },
   loadMore: ({ commit }) => {
     axios.get(state.nextHref).then(response => {
-      console.log(response)
       commit(types.CHANGE_NEXT_DATA, {data: response.data.collection, href: response.data.next_href})
+      commit(types.FORMAT_IMG_URL, {img: response.data.collection})
     })
   }
 }
@@ -41,12 +46,12 @@ const actions = {
 const mutations = {
   [types.CHANGE_DATA] (state, {list, href}) {
     state.cardList = list
+    state.nextData = list
     state.nextHref = href
-    console.log(state.nextHref)
   },
   [types.FORMAT_IMG_URL] (state) {
-    state.cardList.forEach(function (item) {
-      item.artwork_url = item.artwork_url.replace('large', 't300x300')
+    state.nextData.forEach(function (item) {
+      if (item.artwork_url) item.artwork_url = item.artwork_url.replace('large', 't300x300')
     })
   },
   [types.FORMAT_SONG_TITLE] (state) {
@@ -61,10 +66,11 @@ const mutations = {
   [types.CHANGE_NEXT_DATA] (state, {data, href}) {
     console.log('next')
     state.nextData = data
-    console.log(state.nextData)
     state.cardList = state.cardList.concat(data)
     console.log(state.cardList)
     state.nextHref = href
+    // 这里要改成false
+    state.scrollLoading = true
   }
 }
 
