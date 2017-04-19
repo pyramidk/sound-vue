@@ -7,3 +7,6 @@ export const FORMAT_SONG_TITLE = 'FORMAT_SONG_TITLE'
 // play
 export const GET_PLAY_NOW = 'GET_PLAY_NOW'
 export const GET_PLAYLIST = 'GET_PLAYLIST'
+export const CHANGE_TO_PLAY = 'CHANGE_TO_PLAY'
+export const CHANGE_TO_PAUSE = 'CHANGE_TO_PAUSE'
+export const CHANGE_TO_ACTIVE = 'CHANGE_TO_ACTIVE'

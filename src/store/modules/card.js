@@ -1,7 +1,5 @@
 import * as types from '../mutation-types'
 
-// import {once} from '../../utils/FormatUtils'
-
 import axios from 'axios'
 
 // initial state
@@ -10,14 +8,13 @@ const state = {
   nextHref: '',
   nextData: [],
   scrollLoading: false,
-  playNow: ''
+  activeNum: 0
 }
 
 // getters
 const getters = {
   cardList: state => state.cardList,
-  scrollLoading: state => state.scrollLoading,
-  playNow: state => state.playNow
+  scrollLoading: state => state.scrollLoading
 }
 
 // actions
@@ -25,11 +22,15 @@ const actions = {
   // mutation 不能异步；state要在mutation里修改
   getData: ({ commit }) => {
     axios.get('https://api.soundcloud.com/tracks?linked_partitioning=1&client_id=e582b63d83a5fb2997d1dbf2f62705da&limit=10&offset=0&tags=chill%20house').then(response => {
+      response.data.collection.forEach(function (item) {
+        item.isActive = false
+        item.isPlaying = false
+      })
       console.log(response.data.collection)
       commit(types.CHANGE_DATA, {list: response.data.collection, href: response.data.next_href})
       commit(types.FORMAT_IMG_URL)
       commit(types.FORMAT_SONG_TITLE)
-      console.log(state.cardList.length)
+      // console.log(state.cardList.length)
     }, response => {
       console.log('请求出错')
     })
@@ -39,6 +40,9 @@ const actions = {
       commit(types.CHANGE_NEXT_DATA, {data: response.data.collection, href: response.data.next_href})
       commit(types.FORMAT_IMG_URL, {img: response.data.collection})
     })
+  },
+  isActive: ({ commit }, index) => {
+    commit(types.CHANGE_TO_ACTIVE, {index})
   }
 }
 
@@ -71,6 +75,16 @@ const mutations = {
     state.nextHref = href
     // 这里要改成false
     state.scrollLoading = true
+  },
+  // 因为用的cardlist渲染的列表， 所以涉及active在这里修改
+  [types.CHANGE_TO_ACTIVE] (state, {index}) {
+    if (state.activeNum !== index || state.activeNum === 0) {
+      state.cardList[state.activeNum].isActive = false
+      state.cardList[state.activeNum].isPlaying = false
+      state.activeNum = index
+      state.cardList[index].isActive = true
+      state.cardList[index].isPlaying = true
+    }
   }
 }
 

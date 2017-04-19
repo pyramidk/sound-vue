@@ -3,25 +3,31 @@ import * as types from '../mutation-types'
 // initial state
 const state = {
   playList: '',
-  playNow: '',
+  playNow: {
+    user: {
+      username: ''
+    }
+  },
   playStatus: false
 }
 
 // getters
 const getters = {
-  playStatus: state => state.playStatus
+  playStatus: state => state.playStatus,
+  playNow: state => state.playNow
 }
 
 // actions
 const actions = {
-  play: ({ commit, rootState }, index) => {
+  getPlayData: ({ commit, rootState }, index) => {
     commit(types.GET_PLAYLIST, {rootState})
     commit(types.GET_PLAY_NOW, {index: index})
-    console.log(index)
-    console.log(state.playNow)
   },
-  playHandler: ({ commit }) => {
-    console.log('test')
+  play: ({ commit }) => {
+    commit(types.CHANGE_TO_PLAY)
+  },
+  pause: ({ commit }) => {
+    commit(types.CHANGE_TO_PAUSE)
   }
 }
 
@@ -31,8 +37,14 @@ const mutations = {
     state.playList = rootState.card.cardList
   },
   [types.GET_PLAY_NOW] (state, {index}) {
-    state.playNow = state.playList[index].stream_url
+    state.playNow = state.playList[index]
     state.playStatus = true
+  },
+  [types.CHANGE_TO_PLAY] (state) {
+    state.playStatus = true
+  },
+  [types.CHANGE_TO_PAUSE] (state) {
+    state.playStatus = false
   }
 }
 

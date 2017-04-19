@@ -1,13 +1,13 @@
 <template>
-  <div class="player">
-  	<audio :src="playNow + '?client_id=e582b63d83a5fb2997d1dbf2f62705da'" ref='audio'></audio>
+  <div class="player" v-show="playerShow">
+  	<audio :src="playNow.stream_url + '?client_id=e582b63d83a5fb2997d1dbf2f62705da'" ref='audio'></audio>
     <div class="container">
       <div class="player-main">
         <div class="player-section player-info">
-          <img alt="song artwork" class="player-image" src="https://i1.sndcdn.com/artworks-000081873185-0coftk-large.jpg">
+          <img alt="song artwork" class="player-image" :src="playNow.artwork_url">
           <div class="song-card-details">
-            <a class="song-card-title" href="" title="">Words</a>
-            <a class="song-card-user-username" href="/#/users/6433865" title="Lulleaux">Lulleaux</a>
+            <a class="song-card-title" href="" :title="playNow.title">{{playNow.title}}</a>
+            <a class="song-card-user-username" href="/#/users/6433865" title="Lulleaux">{{playNow.user.username}}</a>
           </div>
         </div>
         <div class="player-section">
@@ -72,19 +72,26 @@ import { mapGetters } from 'vuex'
 
 export default {
   data () {
-    return {}
+    return {
+      playerShow: false
+    }
+  },
+  mounted () {
+    console.log(this.$store.state.player.playNow)
   },
   methods: {
     play () {
-      console.log('playzhix')
-      this.$store.dispatch('test')
-      this.$refs.audio.play()
-      // this.playStatus = true
+      this.$store.dispatch('play')
+      this.$nextTick(function () {
+        console.log('playzhix')
+        this.$refs.audio.play()
+      })
+      if (!this.playerShow) this.playerShow = true
     },
     pause () {
+      this.$store.dispatch('pause')
       this.$refs.audio.pause()
-      console.log('test')
-      this.playStatus = false
+      console.log('pause')
     }
   },
   computed: mapGetters([

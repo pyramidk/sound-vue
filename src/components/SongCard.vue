@@ -2,9 +2,10 @@
   <div class="songs-row grid" v-infinite-scroll="loadMore" infinite-scroll-disabled="scrollLoading" infinite-scroll-distance="10" infinite-scroll-immediate-check="false">
     <div class="col-1-5 clearfix" v-for="(item, index) in cardList" :index="index">
       <div class="card song-card">
-        <div class="song-card-image" :style="{ backgroundImage: 'url(' + item.artwork_url + ')'}" @click='playHandler(index)'>
-          <div class="toggle-play-button">
+        <div class="song-card-image" :style="{ backgroundImage: 'url(' + item.artwork_url + ')'}" @click='tooglePlay(index)'>
+          <div class="toggle-play-button" :class="{'active': item.isActive, 'is-playing': item.isPlaying}">
             <i class="toggle-play-button-icon ion-ios-play"></i>
+            <i class="toggle-play-button-icon ion-radio-waves"></i>
           </div>
         </div>
         <div class="song-card-user">
@@ -27,25 +28,49 @@ import { mapGetters } from 'vuex'
 
 export default {
   data () {
-    return {}
+    return {
+      index: ''
+    }
   },
   methods: {
     loadMore: function () {
-      // console.log(this.$store.state)
       // 不能多次loading
       // this.busy = this.$store.state.card.scrollLoading
       this.$store.dispatch('loadMore')
       console.log('执行loadmore')
     },
     playHandler (index) {
-      this.$store.dispatch('play', index)
-      console.log(this)
-      this.$refs.audio.play()
+      this.index = index
+      this.$store.dispatch('getPlayData', index)
+      /* 问题：获取其它组件的refs */
+      this.$parent.$children.forEach(function (item) {
+        if (item.$refs.audio) {
+          // 执行player.vue的play方法
+          item.play()
+        }
+      })
+      this.$store.dispatch('isActive', index)
+    },
+    pauseHandler () {
+      this.$parent.$children.forEach(function (item) {
+        if (item.$refs.audio) {
+          // 执行player.vue的player方法
+          item.pause()
+        }
+      })
+    },
+    tooglePlay (index) {
+      if (!this.$store.state.player.playStatus || this.index !== index) {
+        this.playHandler(index)
+      } else {
+        this.pauseHandler()
+      }
     }
   },
   computed: mapGetters([
     'cardList',
-    'scrollLoading'
+    'scrollLoading',
+    'playStatus'
   ])
 }
 </script>
