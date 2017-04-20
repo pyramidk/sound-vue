@@ -25,6 +25,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import spinner from './Spinner'
 
 export default {
   data () {
@@ -35,7 +36,7 @@ export default {
   methods: {
     loadMore: function () {
       // 不能多次loading
-      // this.busy = this.$store.state.card.scrollLoading
+      this.$store.dispatch('loadStop')
       this.$store.dispatch('loadMore')
       console.log('执行loadmore')
     },
@@ -59,18 +60,23 @@ export default {
       })
     },
     tooglePlay (index) {
-      if (!this.$store.state.player.playStatus || this.index !== index) {
-        this.playHandler(index)
-      } else {
-        this.pauseHandler(index)
-      }
+      this.$nextTick(function () {
+        if (!this.$store.state.player.playStatus || this.index !== index) {
+          this.playHandler(index)
+        } else {
+          this.pauseHandler(index)
+        }
+      })
     }
   },
   computed: mapGetters([
     'cardList',
     'scrollLoading',
     'playStatus'
-  ])
+  ]),
+  components: {
+    spinner
+  }
 }
 </script>
 

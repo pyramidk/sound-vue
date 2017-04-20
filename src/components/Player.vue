@@ -107,7 +107,6 @@ export default {
     pause (index) {
       this.$store.dispatch('pause')
       this.$refs.audio.pause()
-      // this.$store.dispatch('isNotPlay', index)
       clearInterval(this.clear)
       console.log('pause')
     },
@@ -128,7 +127,11 @@ export default {
         } else {
           that.duration === '00:00' ? that.duration = that.timeFormat(that.$refs.audio.duration) : ''
           that.durationBar = (that.$refs.audio.currentTime / that.$refs.audio.duration) * 100
-          if (that.durationBar === 100) clearInterval(that.clear)
+          if (that.durationBar === 100) {
+            clearInterval(that.clear)
+            // 结束自动播放下一曲
+            that.playNext(that.playNum + 1)
+          }
         }
       }, 1000)
     },
@@ -144,6 +147,7 @@ export default {
       this.durationBar = (this.$refs.audio.currentTime / this.$refs.audio.duration) * 100
     },
     playNext (index) {
+      console.log('next')
       this.playNum = index
       this.$store.dispatch('getPlayData', index)
       this.play(index)

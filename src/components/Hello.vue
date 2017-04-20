@@ -6,6 +6,7 @@
       <div class="container">
         <div class="content">
           <Card></Card>
+          <Spinner></Spinner>
         </div>
       </div>
     </div>
@@ -19,6 +20,7 @@ import CNav from './Nav'
 import Toolbar from './Toolbar'
 import Card from './SongCard'
 import Player from './Player'
+import Spinner from './Spinner'
 
 // import { mapActions } from 'vuex'
 
@@ -43,7 +45,8 @@ export default {
     CNav,
     Toolbar,
     Card,
-    Player
+    Player,
+    Spinner
   }
 }
 </script>
