@@ -46,16 +46,15 @@ export default {
       this.$parent.$children.forEach(function (item) {
         if (item.$refs.audio) {
           // 执行player.vue的play方法
-          item.play()
+          item.play(index)
         }
       })
-      this.$store.dispatch('isActive', index)
     },
-    pauseHandler () {
+    pauseHandler (index) {
       this.$parent.$children.forEach(function (item) {
         if (item.$refs.audio) {
           // 执行player.vue的player方法
-          item.pause()
+          item.pause(index)
         }
       })
     },
@@ -63,7 +62,7 @@ export default {
       if (!this.$store.state.player.playStatus || this.index !== index) {
         this.playHandler(index)
       } else {
-        this.pauseHandler()
+        this.pauseHandler(index)
       }
     }
   },

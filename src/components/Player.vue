@@ -15,8 +15,8 @@
             <i class="icon ion-ios-rewind"></i>
           </div>
           <div class="player-button">
-            <i v-show="!playStatus" class="icon ion-ios-play" ref="play-button" @click='play'></i>
-            <i v-show="playStatus" class="icon ion-ios-pause" ref="play-button" @click='pause'></i>
+            <i v-show="!playStatus" class="icon ion-ios-play" ref="play-button" @click='play(playNum)'></i>
+            <i v-show="playStatus" class="icon ion-ios-pause" ref="play-button" @click='pause(playNum)'></i>
           </div>
           <div class="player-button">
             <i class="icon ion-ios-fastforward"></i>
@@ -25,15 +25,15 @@
         <div class="player-section player-seek">
           <div class="player-seek-bar-wrap">
             <div class="player-seek-bar">
-              <div class="player-seek-duration-bar" style="width: 32.6754%;">
+              <div class="player-seek-duration-bar" :style="{width: durationBar + '%'}">
                 <div class="player-seek-handle"></div>
               </div>
             </div>
           </div>
           <div class="player-time">
-            <span>02:29</span>
+            <span>{{currentTime}}</span>
             <span class="player-time-divider">/</span>
-            <span>07:36</span>
+            <span>{{duration}}</span>
           </div>
         </div>
         <div class="player-section">
@@ -55,7 +55,7 @@
           <div class="player-volume">
             <div class="player-seek-bar-wrap">
               <div class="player-seek-bar">
-                <div class="player-seek-duration-bar" style="width: 100%;">
+                <div class="player-seek-duration-bar" :style="{width: durationBar}">
                   <div class="player-seek-handle"></div>
                 </div>
               </div>
@@ -73,25 +73,60 @@ import { mapGetters } from 'vuex'
 export default {
   data () {
     return {
-      playerShow: false
+      playerShow: false,
+      currentTime: '00:00',
+      playNum: 0,
+      duration: '00:00',
+      clear: {},
+      durationBar: 0
     }
   },
   mounted () {
-    console.log(this.$store.state.player.playNow)
+    // console.log(this.$store.state.player.playNow)
+    // console.log(this.$refs.audio.currentTime)
   },
   methods: {
-    play () {
-      this.$store.dispatch('play')
+    // 这个index需要放到vuex里，监听变化
+    play (index) {
+      // console.log(index)
+      this.$store.dispatch('play', index)
       this.$nextTick(function () {
         console.log('playzhix')
         this.$refs.audio.play()
+        this.timeChange()
+        this.playNum = index
       })
       if (!this.playerShow) this.playerShow = true
     },
-    pause () {
+    pause (index) {
       this.$store.dispatch('pause')
       this.$refs.audio.pause()
+      // this.$store.dispatch('isNotPlay', index)
+      clearInterval(this.clear)
       console.log('pause')
+    },
+    timeFormat (number) {
+      let minute = parseInt(number / 60)
+      let second = parseInt(number % 60)
+      minute = minute > 10 ? minute : '0' + minute
+      second = second >= 10 ? second : '0' + second
+      return minute + ':' + second
+    },
+    timeChange () {
+      let that = this
+      // 需要clearInterval, 播放结束的时候要clear
+      this.clear = setInterval(function () {
+        that.currentTime = that.timeFormat(that.$refs.audio.currentTime)
+        if (isNaN(that.$refs.audio.duration)) {
+          that.duration = '00:00'
+        } else {
+          that.duration === '00:00' ? that.duration = that.timeFormat(that.$refs.audio.duration) : ''
+          console.log((that.$refs.audio.currentTime / that.$refs.audio.duration) * 100)
+          that.durationBar = (that.$refs.audio.currentTime / that.$refs.audio.duration) * 100
+          // console.log(that.$refs.audio.duration)
+          if (that.durationBar === 100) clearInterval(that.clear)
+        }
+      }, 1000)
     }
   },
   computed: mapGetters([

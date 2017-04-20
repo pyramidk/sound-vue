@@ -7,8 +7,7 @@ const state = {
   cardList: [],
   nextHref: '',
   nextData: [],
-  scrollLoading: false,
-  activeNum: 0
+  scrollLoading: false
 }
 
 // getters
@@ -40,9 +39,6 @@ const actions = {
       commit(types.CHANGE_NEXT_DATA, {data: response.data.collection, href: response.data.next_href})
       commit(types.FORMAT_IMG_URL, {img: response.data.collection})
     })
-  },
-  isActive: ({ commit }, index) => {
-    commit(types.CHANGE_TO_ACTIVE, {index})
   }
 }
 
@@ -75,16 +71,6 @@ const mutations = {
     state.nextHref = href
     // 这里要改成false
     state.scrollLoading = true
-  },
-  // 因为用的cardlist渲染的列表， 所以涉及active在这里修改
-  [types.CHANGE_TO_ACTIVE] (state, {index}) {
-    if (state.activeNum !== index || state.activeNum === 0) {
-      state.cardList[state.activeNum].isActive = false
-      state.cardList[state.activeNum].isPlaying = false
-      state.activeNum = index
-      state.cardList[index].isActive = true
-      state.cardList[index].isPlaying = true
-    }
   }
 }
 

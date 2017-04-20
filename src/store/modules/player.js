@@ -8,7 +8,8 @@ const state = {
       username: ''
     }
   },
-  playStatus: false
+  playStatus: false,
+  activeNum: 0
 }
 
 // getters
@@ -23,11 +24,11 @@ const actions = {
     commit(types.GET_PLAYLIST, {rootState})
     commit(types.GET_PLAY_NOW, {index: index})
   },
-  play: ({ commit }) => {
-    commit(types.CHANGE_TO_PLAY)
+  play: ({ commit, rootState }, index) => {
+    commit(types.CHANGE_TO_PLAY, {rootState, index: index})
   },
-  pause: ({ commit }) => {
-    commit(types.CHANGE_TO_PAUSE)
+  pause: ({ commit, rootState }) => {
+    commit(types.CHANGE_TO_PAUSE, {rootState})
   }
 }
 
@@ -38,13 +39,23 @@ const mutations = {
   },
   [types.GET_PLAY_NOW] (state, {index}) {
     state.playNow = state.playList[index]
-    state.playStatus = true
   },
-  [types.CHANGE_TO_PLAY] (state) {
+  [types.CHANGE_TO_PLAY] (state, {rootState, index}) {
     state.playStatus = true
+    // active
+    if (state.activeNum !== index || state.activeNum === 0) {
+      rootState.card.cardList[state.activeNum].isActive = false
+      rootState.card.cardList[state.activeNum].isPlaying = false
+      state.activeNum = index
+      rootState.card.cardList[index].isActive = true
+      rootState.card.cardList[index].isPlaying = true
+    } else {
+      rootState.card.cardList[index].isPlaying = true
+    }
   },
-  [types.CHANGE_TO_PAUSE] (state) {
+  [types.CHANGE_TO_PAUSE] (state, {rootState}) {
     state.playStatus = false
+    rootState.card.cardList[state.activeNum].isPlaying = false
   }
 }
 
