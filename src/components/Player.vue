@@ -11,22 +11,22 @@
           </div>
         </div>
         <div class="player-section">
-          <div class="player-button">
+          <div class="player-button" @click="playNext(playNum - 1)">
             <i class="icon ion-ios-rewind"></i>
           </div>
           <div class="player-button">
-            <i v-show="!playStatus" class="icon ion-ios-play" ref="play-button" @click='play(playNum)'></i>
-            <i v-show="playStatus" class="icon ion-ios-pause" ref="play-button" @click='pause(playNum)'></i>
+            <i v-show="!playStatus" class="icon ion-ios-play" @click='play(playNum)'></i>
+            <i v-show="playStatus" class="icon ion-ios-pause" @click='pause(playNum)'></i>
           </div>
-          <div class="player-button">
+          <div class="player-button" @click="playNext(playNum + 1)">
             <i class="icon ion-ios-fastforward"></i>
           </div>
         </div>
         <div class="player-section player-seek">
-          <div class="player-seek-bar-wrap">
-            <div class="player-seek-bar">
+          <div class="player-seek-bar-wrap" ref="seekWrap" @click="progressChange($event)">
+            <div class="player-seek-bar" ref="playerSeekBar">
               <div class="player-seek-duration-bar" :style="{width: durationBar + '%'}">
-                <div class="player-seek-handle"></div>
+                <div class="player-seek-handle" @mousdown="progressChange($event)"></div>
               </div>
             </div>
           </div>
@@ -75,26 +75,32 @@ export default {
     return {
       playerShow: false,
       currentTime: '00:00',
-      playNum: 0,
       duration: '00:00',
+      playNum: 0,
       clear: {},
-      durationBar: 0
+      durationBar: 0,
+      barWidth: 0,
+      percent: 0,
+      startPosition: 0,
+      moviePosition: 0
     }
   },
   mounted () {
     // console.log(this.$store.state.player.playNow)
-    // console.log(this.$refs.audio.currentTime)
+    console.log(this.$refs.playerSeekBar.offsetWidth)
   },
   methods: {
     // 这个index需要放到vuex里，监听变化
     play (index) {
-      // console.log(index)
+      console.log(index)
       this.$store.dispatch('play', index)
       this.$nextTick(function () {
         console.log('playzhix')
         this.$refs.audio.play()
         this.timeChange()
         this.playNum = index
+        // 得到bar的宽
+        this.barWidth = this.$refs.playerSeekBar.offsetWidth
       })
       if (!this.playerShow) this.playerShow = true
     },
@@ -121,12 +127,26 @@ export default {
           that.duration = '00:00'
         } else {
           that.duration === '00:00' ? that.duration = that.timeFormat(that.$refs.audio.duration) : ''
-          console.log((that.$refs.audio.currentTime / that.$refs.audio.duration) * 100)
           that.durationBar = (that.$refs.audio.currentTime / that.$refs.audio.duration) * 100
-          // console.log(that.$refs.audio.duration)
           if (that.durationBar === 100) clearInterval(that.clear)
         }
       }, 1000)
+    },
+    progressChange (event) {
+      // 开始位置
+      this.startPosition = this.$refs.playerSeekBar.offsetLeft
+      // 鼠标移动的位置
+      this.moviePosition = event.clientX
+      this.percent = (this.moviePosition - this.startPosition) / this.barWidth
+      // 得到百分比，然后和总时间相乘得到出currenttime
+      this.$refs.audio.currentTime = this.$refs.audio.duration * this.percent
+      this.currentTime = this.timeFormat(this.$refs.audio.currentTime)
+      this.durationBar = (this.$refs.audio.currentTime / this.$refs.audio.duration) * 100
+    },
+    playNext (index) {
+      this.playNum = index
+      this.$store.dispatch('getPlayData', index)
+      this.play(index)
     }
   },
   computed: mapGetters([

@@ -55,6 +55,7 @@ const mutations = {
   },
   [types.CHANGE_TO_PAUSE] (state, {rootState}) {
     state.playStatus = false
+    // playing相关
     rootState.card.cardList[state.activeNum].isPlaying = false
   }
 }
