@@ -20,9 +20,10 @@ const getters = {
 // actions
 const actions = {
   // mutation 不能异步；state要在mutation里修改
-  getData: ({ commit }) => {
+  getData: ({ commit }, index) => {
+    console.log(index)
     // https://api.soundcloud.com/tracks?linked_partitioning=1&client_id=e582b63d83a5fb2997d1dbf2f62705da&limit=50&offset=0&tags=chill%20house
-    axios.get(constants.API + '&tags=' + constants.TYPE.chill + '%20house').then(response => {
+    axios.get(constants.API + '&tags=' + constants.TYPE[index] + '%20house').then(response => {
       response.data.collection.forEach(function (item) {
         item.isActive = false
         item.isPlaying = false

@@ -60,6 +60,7 @@ export default {
       })
     },
     tooglePlay (index) {
+      console.log('test')
       this.$nextTick(function () {
         if (!this.$store.state.player.playStatus || this.index !== index) {
           this.playHandler(index)

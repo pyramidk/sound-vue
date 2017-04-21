@@ -6,7 +6,7 @@
   		</div>
   		<div class="nav-nav float-left">
   			<div class="nav-nav-item">
-  				<a class="nav-nav-item-link active" href="/#/songs" title="">SoundRedux</a>
+  				<a class="nav-nav-item-link active" href="/#/songs" title="">SoundVue</a>
   			</div>
   		</div>
   		<div class="nav-nav float-right">
