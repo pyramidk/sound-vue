@@ -5,6 +5,8 @@ export const CHANGE_NEXT_DATA = 'CHANGE_NEXT_DATA'
 export const FORMAT_IMG_URL = 'FORMAT_IMG_URL'
 export const FORMAT_SONG_TITLE = 'FORMAT_SONG_TITLE'
 export const RECOVER_SCROLL = 'RECOVER_SCROLL'
+// router
+export const CLEAR_DATA = 'CLEAR_DATA'
 // play
 export const GET_PLAY_NOW = 'GET_PLAY_NOW'
 export const GET_PLAYLIST = 'GET_PLAYLIST'

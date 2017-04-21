@@ -10,4 +10,4 @@ export const TYPE = {
   tropical: 'tropical'
 }
 export const LIMIT = 50
-export const API = 'https://api.soundcloud.com/tracks?linked_partitioning=1&client_id=e582b63d83a5fb2997d1dbf2f62705da&limit=5&offset=0'
+export const API = 'https://api.soundcloud.com/tracks?linked_partitioning=1&client_id=e582b63d83a5fb2997d1dbf2f62705da&limit=4&offset=0'

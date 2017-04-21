@@ -22,6 +22,7 @@ const actions = {
   // mutation 不能异步；state要在mutation里修改
   getData: ({ commit }, index) => {
     console.log(index)
+    commit(types.CLEAR_DATA)
     // https://api.soundcloud.com/tracks?linked_partitioning=1&client_id=e582b63d83a5fb2997d1dbf2f62705da&limit=50&offset=0&tags=chill%20house
     axios.get(constants.API + '&tags=' + constants.TYPE[index] + '%20house').then(response => {
       response.data.collection.forEach(function (item) {
@@ -45,11 +46,13 @@ const actions = {
       })
       commit(types.CHANGE_NEXT_DATA, {data: response.data.collection, href: response.data.next_href})
       commit(types.FORMAT_IMG_URL, {img: response.data.collection})
-      // commit(types.RECOVER_SCROLL)
     })
   },
   loadStop: ({ commit }) => {
     commit(types.RECOVER_SCROLL)
+  },
+  clear: ({ commit }) => {
+    commit(types.CLEAR_DATA)
   }
 }
 
@@ -85,6 +88,10 @@ const mutations = {
   },
   [types.RECOVER_SCROLL] (state) {
     state.scrollLoading = true
+  },
+  // router
+  [types.CLEAR_DATA] (state) {
+    state.cardList = []
   }
 }
 

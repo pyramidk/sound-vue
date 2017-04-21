@@ -6,7 +6,7 @@
   		</div>
   		<div class="nav-nav float-left">
   			<div class="nav-nav-item">
-  				<a class="nav-nav-item-link active" href="/#/songs" title="">SoundVue</a>
+  				<a class="nav-nav-item-link active" href="/#/songs" title="">Sound</a>
   			</div>
   		</div>
   		<div class="nav-nav float-right">
@@ -21,7 +21,7 @@
   					<div class="nav-user-link">
   						<i class="icon ion-person"></i>
   						<i class="icon ion-chevron-down"></i>
-  						<i class="icon ion-chevron-up"></i>
+  						<!-- <i class="icon ion-chevron-up"></i> -->
   					</div>
   				</div>
   			</div>

@@ -7,6 +7,7 @@
         <router-view></router-view>
       </div>
     </div>
+    <Player></Player>
   </div>
 </template>
 

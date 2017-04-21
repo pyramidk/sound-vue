@@ -147,7 +147,6 @@ export default {
       this.durationBar = (this.$refs.audio.currentTime / this.$refs.audio.duration) * 100
     },
     playNext (index) {
-      console.log('next')
       this.playNum = index
       this.$store.dispatch('getPlayData', index)
       this.play(index)

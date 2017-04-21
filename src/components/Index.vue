@@ -9,8 +9,6 @@
 import Card from './SongCard'
 import Spinner from './Spinner'
 
-// import { mapActions } from 'vuex'
-
 export default {
   name: 'hello',
   data () {
@@ -26,11 +24,11 @@ export default {
     }
   },
   mounted () {
-    this.type = this.$route.params.id
     this.getData(this.type)
   },
   methods: {
     getData (index) {
+      console.log('getData')
       this.$store.dispatch('getData', index)
     }
   },

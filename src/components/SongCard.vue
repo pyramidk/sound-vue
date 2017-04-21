@@ -44,7 +44,8 @@ export default {
       this.index = index
       this.$store.dispatch('getPlayData', index)
       /* 问题：获取其它组件的refs */
-      this.$parent.$children.forEach(function (item) {
+      console.log(this.$parent)
+      this.$parent.$parent.$children.forEach(function (item) {
         if (item.$refs.audio) {
           // 执行player.vue的play方法
           item.play(index)
