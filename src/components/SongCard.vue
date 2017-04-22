@@ -55,7 +55,6 @@ export default {
     pauseHandler (index) {
       this.$parent.$children.forEach(function (item) {
         if (item.$refs.audio) {
-          // 执行player.vue的player方法
           item.pause(index)
         }
       })

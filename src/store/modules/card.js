@@ -8,13 +8,15 @@ const state = {
   cardList: [],
   nextHref: '',
   nextData: [],
-  scrollLoading: false
+  scrollLoading: false,
+  typeNow: 'chill'
 }
 
 // getters
 const getters = {
   cardList: state => state.cardList,
-  scrollLoading: state => state.scrollLoading
+  scrollLoading: state => state.scrollLoading,
+  typeNow: state => state.typeNow
 }
 
 // actions
@@ -22,8 +24,7 @@ const actions = {
   // mutation 不能异步；state要在mutation里修改
   getData: ({ commit }, index) => {
     console.log(index)
-    commit(types.CLEAR_DATA)
-    // https://api.soundcloud.com/tracks?linked_partitioning=1&client_id=e582b63d83a5fb2997d1dbf2f62705da&limit=50&offset=0&tags=chill%20house
+    commit(types.CLEAR_DATA, {type: index})
     axios.get(constants.API + '&tags=' + constants.TYPE[index] + '%20house').then(response => {
       response.data.collection.forEach(function (item) {
         item.isActive = false
@@ -33,7 +34,6 @@ const actions = {
       commit(types.CHANGE_DATA, {list: response.data.collection, href: response.data.next_href})
       commit(types.FORMAT_IMG_URL)
       commit(types.FORMAT_SONG_TITLE)
-      // console.log(state.cardList.length)
     }, response => {
       console.log('请求出错')
     })
@@ -81,7 +81,6 @@ const mutations = {
     console.log('next')
     state.nextData = data
     state.cardList = state.cardList.concat(data)
-    // console.log(state.cardList)
     state.nextHref = href
     // 这里要改成false
     state.scrollLoading = false
@@ -90,8 +89,10 @@ const mutations = {
     state.scrollLoading = true
   },
   // router
-  [types.CLEAR_DATA] (state) {
+  [types.CLEAR_DATA] (state, {type}) {
     state.cardList = []
+    // toolbar type的修改
+    state.typeNow = type
   }
 }
 

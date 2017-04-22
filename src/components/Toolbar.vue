@@ -2,7 +2,7 @@
   <div class="toolbar">
     <div class="container">
       <div class="toolbar-items">
-        <router-link to="/songs/chill" class="toolbar-item toolbar-genre active">悠然</router-link>
+        <router-link to="/songs/chill" class="toolbar-item toolbar-genre" :class="{'router-link-active': typeNow === 'chill'}">悠然</router-link>
         <router-link to="/songs/deep" class="toolbar-item toolbar-genre">深邃</router-link>
         <router-link to="/songs/dubstep" class="toolbar-item toolbar-genre">贝斯</router-link>
         <router-link to="/songs/house" class="toolbar-item toolbar-genre">舞曲</router-link>
@@ -22,10 +22,14 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   data () {
     return {}
-  }
+  },
+  computed: mapGetters([
+    'typeNow'
+  ])
 }
 </script>
 

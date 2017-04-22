@@ -1,27 +1,38 @@
-# my-project
+# SoundClound
 
-> A Vue.js project
+> 用Vue/Vuex写的SoundClound客户端，在线访问需要VPN
 
-## Build Setup
+## 使用
 
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run all tests
-npm test
 ```
+1. npm install 
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+2. npm run dev
+
+3. visit http://localhost:8082/
+
+```
+## 截图
+![](screenshot/loading.PNG)
+![](screenshot/context.PNG)
+## 功能
+
+### 已实现的功能
+* 播放、暂停
+* 上一曲
+* 下一曲
+* 进度控制
+* 自动播放
+* 分类
+* 状态变化
+
+### 待实现的功能
+* 音量控制
+* 播放列表
+* 详情页
+* 移动端
+
+## 参考
+
+* [SoundRedux](https://github.com/andrewngu/sound-redux)
+* [vue-infinite-scroll](https://github.com/ElemeFE/vue-infinite-scroll)
