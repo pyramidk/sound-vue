@@ -1,6 +1,6 @@
 # SoundClound
 
-> 用Vue/Vuex写的SoundClound客户端，在线访问需要VPN
+> 用Vue/Vuex写的SoundClound客户端，[在线访问](https://zackbro.github.io/Sound-Vue/#/)需要VPN
 
 ## 使用
 
