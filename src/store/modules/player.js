@@ -43,8 +43,6 @@ const mutations = {
   [types.CHANGE_TO_PLAY] (state, {rootState, index}) {
     state.playStatus = true
     // active
-    console.log(index)
-    console.log(state.activeNum)
     if (state.activeNum !== index || state.activeNum === 0) {
       console.log(rootState.card.cardList[state.activeNum])
       rootState.card.cardList[state.activeNum].isActive = false
@@ -55,7 +53,6 @@ const mutations = {
       rootState.card.cardList[index].isActive = true
       rootState.card.cardList[index].isPlaying = true
     } else {
-      console.log('test')
       rootState.card.cardList[index].isPlaying = true
     }
   },

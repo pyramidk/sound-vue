@@ -12,9 +12,9 @@
         <router-link to="/songs/tropical" class="toolbar-item toolbar-genre">舒适</router-link>
         <div class="toolbar-item toolbar-filter toolbar-times">
           <i class="icon ion-funnel"></i>
-          <a class="toolbar-time " href="/#/songs?q=chill&amp;t=7" title="">7 days</a>
-          <a class="toolbar-time " href="/#/songs?q=chill&amp;t=30" title="">30 days</a>
-          <a class="toolbar-time " href="/#/songs?q=chill&amp;t=90" title="">90 days</a>
+          <a class="toolbar-time " href="">7 days</a>
+          <a class="toolbar-time ">30 days</a>
+          <a class="toolbar-time ">90 days</a>
         </div>
       </div>
     </div>
@@ -24,9 +24,6 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
-  data () {
-    return {}
-  },
   computed: mapGetters([
     'typeNow'
   ])

@@ -4,10 +4,10 @@
     <div class="container">
       <div class="player-main">
         <div class="player-section player-info">
-          <img alt="song artwork" class="player-image" :src="playNow.artwork_url">
+          <img alt="song artwork" class="player-image" src="">
           <div class="song-card-details">
-            <a class="song-card-title" href="" :title="playNow.title">{{playNow.title}}</a>
-            <a class="song-card-user-username" href="/#/users/6433865" title="Lulleaux">{{playNow.user.username}}</a>
+            <a class="song-card-title" :title="playNow.title">{{playNow.title}}</a>
+            <a class="song-card-user-username" title="Lulleaux">{{playNow.user.username}}</a>
           </div>
         </div>
         <div class="player-section">
@@ -47,15 +47,15 @@
             <i class="icon ion-android-list"></i>
           </div>
           <div class="player-button player-volume-button">
-            <div class="player-volume-button-wrap">
+            <div class="player-volume-button-wrap" @click="muteVolume">
               <i class="icon ion-android-volume-up"></i>
               <i class="icon ion-android-volume-mute"></i>
             </div>
           </div>
           <div class="player-volume">
-            <div class="player-seek-bar-wrap">
+            <div class="player-seek-bar-wrap" ref="volumeWrap" @click="volumeChange($event)">
               <div class="player-seek-bar">
-                <div class="player-seek-duration-bar" :style="{width: durationBar}">
+                <div class="player-seek-duration-bar" :style="{width: volumeDuration + '%'}">
                   <div class="player-seek-handle"></div>
                 </div>
               </div>
@@ -80,22 +80,15 @@ export default {
       clear: {},
       durationBar: 0,
       barWidth: 0,
-      percent: 0,
-      startPosition: 0,
-      moviePosition: 0
+      volumeDuration: 50
     }
-  },
-  mounted () {
-    // console.log(this.$store.state.player.playNow)
-    console.log(this.$refs.playerSeekBar.offsetWidth)
   },
   methods: {
     // 这个index需要放到vuex里，监听变化
     play (index) {
-      console.log(index)
       this.$store.dispatch('play', index)
-      this.$nextTick(function () {
-        console.log('playzhix')
+      this.$nextTick(() => {
+        console.log('开始播放')
         this.$refs.audio.play()
         this.timeChange()
         this.playNum = index
@@ -108,7 +101,7 @@ export default {
       this.$store.dispatch('pause')
       this.$refs.audio.pause()
       clearInterval(this.clear)
-      console.log('pause')
+      console.log('暂停播放')
     },
     timeFormat (number) {
       let minute = parseInt(number / 60)
@@ -136,13 +129,14 @@ export default {
       }, 1000)
     },
     progressChange (event) {
+      let startPosition, movePosition, percent
       // 开始位置
-      this.startPosition = this.$refs.playerSeekBar.offsetLeft
+      startPosition = this.$refs.playerSeekBar.offsetLeft
       // 鼠标移动的位置
-      this.moviePosition = event.clientX
-      this.percent = (this.moviePosition - this.startPosition) / this.barWidth
+      movePosition = event.clientX
+      percent = (movePosition - startPosition) / this.barWidth
       // 得到百分比，然后和总时间相乘得到出currenttime
-      this.$refs.audio.currentTime = this.$refs.audio.duration * this.percent
+      this.$refs.audio.currentTime = this.$refs.audio.duration * percent
       this.currentTime = this.timeFormat(this.$refs.audio.currentTime)
       this.durationBar = (this.$refs.audio.currentTime / this.$refs.audio.duration) * 100
     },
@@ -150,6 +144,19 @@ export default {
       this.playNum = index
       this.$store.dispatch('getPlayData', index)
       this.play(index)
+    },
+    muteVolume () {
+      this.$refs.audio.volume = 0
+      this.volumeDuration = 0
+    },
+    volumeChange (event) {
+      let width, startPosition, movePosition, percent
+      width = this.$refs.volumeWrap.offsetWidth
+      startPosition = this.$refs.volumeWrap.offsetLeft
+      movePosition = event.clientX
+      percent = (movePosition - startPosition) / width
+      this.$refs.audio.volume = percent
+      this.volumeDuration = percent * 100
     }
   },
   computed: mapGetters([

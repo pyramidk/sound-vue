@@ -18,7 +18,6 @@ export default {
   },
   watch: {
     '$route' (to, from) {
-      console.log(to)
       this.type = to.params.id
       this.getData(this.type)
     }
@@ -28,7 +27,6 @@ export default {
   },
   methods: {
     getData (index) {
-      console.log('getData')
       this.$store.dispatch('getData', index)
     }
   },
