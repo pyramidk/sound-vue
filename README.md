@@ -1,6 +1,6 @@
 # SoundClound
 
-> 用Vue/Vuex写的SoundClound客户端，[在线访问](https://zackbro.github.io/Sound-Vue/#/)需要VPN
+> 用Vue/Vuex写的SoundClound客户端，[在线访问](https://zackbro.github.io/Sound-Vue/#/)需要VPN，因为API的原因，页面载入会慢一些
 
 ## 使用
 
@@ -25,14 +25,15 @@
 * 自动播放
 * 分类
 * 状态变化
+* 音量控制
 
 ### 待实现的功能
-* 音量控制
 * 播放列表
 * 详情页
 * 移动端
 
-## 参考
+## Dependencies
 
 * [SoundRedux](https://github.com/andrewngu/sound-redux)
 * [vue-infinite-scroll](https://github.com/ElemeFE/vue-infinite-scroll)
+* [500px](https://github.com/500px/api-documentation)

@@ -16,15 +16,31 @@ body {
 }
 
 .card {
-    background-color: #fff;
-    border: 1px solid #e3e3e3;
+  background-color: #fff;
+  border: 1px solid #e3e3e3;
 }
 
 .content {
-    margin: 20px 0 80px;
+  margin: 20px 0 80px;
 }
 
 .sticky .content {
-    margin-top: 80px;
+  margin-top: 80px;
 }
 
+a {
+  color: #3381b7;
+  text-decoration: none;
+  &:hover {
+  	text-decoration: underline;
+  }
+}
+
+.song-heart {
+	color: #ccc;
+  transition: color .2s ease-in-out;
+  &:hover {
+    color: #F9C5C5;
+    cursor: pointer;
+  }
+}

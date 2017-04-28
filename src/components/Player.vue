@@ -4,7 +4,7 @@
     <div class="container">
       <div class="player-main">
         <div class="player-section player-info">
-          <img alt="song artwork" class="player-image" src="">
+          <img alt="song artwork" class="player-image" :src="playNow.user.avatar_url">
           <div class="song-card-details">
             <a class="song-card-title" :title="playNow.title">{{playNow.title}}</a>
             <a class="song-card-user-username" title="Lulleaux">{{playNow.user.username}}</a>
