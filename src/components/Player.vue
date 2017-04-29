@@ -84,7 +84,6 @@ export default {
     }
   },
   methods: {
-    // 这个index需要放到vuex里，监听变化
     play (index) {
       this.$store.dispatch('play', index)
       this.$nextTick(() => {
@@ -113,7 +112,7 @@ export default {
     timeChange () {
       let that = this
       // 需要clearInterval, 播放结束的时候要clear
-      this.clear = setInterval(function () {
+      this.clear = setInterval(() => {
         that.currentTime = that.timeFormat(that.$refs.audio.currentTime)
         if (isNaN(that.$refs.audio.duration)) {
           that.duration = '00:00'
