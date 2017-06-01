@@ -1,6 +1,6 @@
 # SoundClound
 
-> 用Vue/Vuex写的SoundClound客户端，[在线访问](https://zackbro.github.io/Sound-Vue/#/)需要VPN，因为API的原因，页面载入会慢一些
+> 用Vue/Vuex写的SoundClound客户端，[在线访问](https://pyramidk.github.io/sound-vue/#/)请自备翻墙梯子，因为SoundClound资源被墙。
 
 ## 使用
 
