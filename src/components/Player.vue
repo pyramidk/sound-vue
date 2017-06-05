@@ -1,6 +1,6 @@
 <template>
   <div class="player" v-show="playerShow">
-  	<audio :src="playNow.stream_url + '?client_id=e582b63d83a5fb2997d1dbf2f62705da'" ref='audio'></audio>
+  	<audio :src="playNow.stream_url + '?client_id=e582b63d83a5fb2997d1dbf2f62705da'" ref="audio" :loop="loopOne"></audio>
     <div class="container">
       <div class="player-main">
         <div class="player-section player-info">
@@ -37,7 +37,7 @@
           </div>
         </div>
         <div class="player-section">
-          <div class="player-button">
+          <div class="player-button" :class="{ active: loopOne}" @click="repeatOne">
             <i class="icon ion-loop"></i>
           </div>
           <div class="player-button">
@@ -77,6 +77,7 @@ export default {
       currentTime: '00:00',
       duration: '00:00',
       playNum: 0,
+      loopOne: false,
       clear: {},
       durationBar: 0,
       barWidth: 0,
@@ -121,8 +122,7 @@ export default {
           that.durationBar = (that.$refs.audio.currentTime / that.$refs.audio.duration) * 100
           if (that.durationBar === 100) {
             clearInterval(that.clear)
-            // 结束自动播放下一曲
-            that.playNext(that.playNum + 1)
+            if (!that.loopOne) that.playNext(that.playNum + 1)
           }
         }
       }, 1000)
@@ -143,6 +143,9 @@ export default {
       this.playNum = index
       this.$store.dispatch('getPlayData', index)
       this.play(index)
+    },
+    repeatOne () {
+      this.loopOne = !this.loopOne
     },
     muteVolume () {
       this.$refs.audio.volume = 0
