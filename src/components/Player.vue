@@ -37,10 +37,10 @@
           </div>
         </div>
         <div class="player-section">
-          <div class="player-button" :class="{ active: loopOne}" @click="repeatOne">
+          <div class="player-button" :class="{ active: loopOne }" @click="repeatOne">
             <i class="icon ion-loop"></i>
           </div>
-          <div class="player-button">
+          <div class="player-button" :class="{ active: random }" @click="randomPlay">
             <i class="icon ion-shuffle"></i>
           </div>
           <div class="player-button top-right popover">
@@ -55,7 +55,7 @@
           <div class="player-volume">
             <div class="player-seek-bar-wrap" ref="volumeWrap" @click="volumeChange($event)">
               <div class="player-seek-bar">
-                <div class="player-seek-duration-bar" :style="{width: volumeDuration + '%'}">
+                <div class="player-seek-duration-bar" :style="{ width: volumeDuration + '%' }">
                   <div class="player-seek-handle"></div>
                 </div>
               </div>
@@ -78,6 +78,7 @@ export default {
       duration: '00:00',
       playNum: 0,
       loopOne: false,
+      random: false,
       clear: {},
       durationBar: 0,
       barWidth: 0,
@@ -146,6 +147,11 @@ export default {
     },
     repeatOne () {
       this.loopOne = !this.loopOne
+      this.random = false
+    },
+    randomPlay () {
+      this.random = !this.random
+      this.loopOne = false
     },
     muteVolume () {
       this.$refs.audio.volume = 0
