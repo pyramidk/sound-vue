@@ -123,7 +123,12 @@ export default {
           that.durationBar = (that.$refs.audio.currentTime / that.$refs.audio.duration) * 100
           if (that.durationBar === 100) {
             clearInterval(that.clear)
-            if (!that.loopOne) that.playNext(that.playNum + 1)
+            if (that.random) {
+              let len = that.playList.length
+              let number = Math.floor(Math.random() * len)
+              that.playNext(number)
+            }
+            if (!that.loopOne && !that.random) that.playNext(that.playNum + 1)
           }
         }
       }, 1000)
@@ -169,7 +174,8 @@ export default {
   },
   computed: mapGetters([
     'playNow',
-    'playStatus'
+    'playStatus',
+    'playList'
   ])
 }
 </script>
