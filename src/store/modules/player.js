@@ -15,7 +15,8 @@ const state = {
 // getters
 const getters = {
   playStatus: state => state.playStatus,
-  playNow: state => state.playNow
+  playNow: state => state.playNow,
+  playList: state => state.playList
 }
 
 // actions
