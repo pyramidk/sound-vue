@@ -112,23 +112,21 @@ export default {
       return minute + ':' + second
     },
     timeChange () {
-      let that = this
-      // 需要clearInterval, 播放结束的时候要clear
       this.clear = setInterval(() => {
-        that.currentTime = that.timeFormat(that.$refs.audio.currentTime)
-        if (isNaN(that.$refs.audio.duration)) {
-          that.duration = '00:00'
+        this.currentTime = this.timeFormat(this.$refs.audio.currentTime)
+        if (isNaN(this.$refs.audio.duration)) {
+          this.duration = '00:00'
         } else {
-          that.duration === '00:00' ? that.duration = that.timeFormat(that.$refs.audio.duration) : ''
-          that.durationBar = (that.$refs.audio.currentTime / that.$refs.audio.duration) * 100
-          if (that.durationBar === 100) {
-            clearInterval(that.clear)
-            if (that.random) {
-              let len = that.playList.length
+          this.duration === '00:00' ? this.duration = this.timeFormat(this.$refs.audio.duration) : ''
+          this.durationBar = (this.$refs.audio.currentTime / this.$refs.audio.duration) * 100
+          if (this.durationBar === 100) {
+            clearInterval(this.clear)
+            if (this.random) {
+              let len = this.playList.length
               let number = Math.floor(Math.random() * len)
-              that.playNext(number)
+              this.playNext(number)
             }
-            if (!that.loopOne && !that.random) that.playNext(that.playNum + 1)
+            if (!this.loopOne && !this.random) this.playNext(this.playNum + 1)
           }
         }
       }, 1000)

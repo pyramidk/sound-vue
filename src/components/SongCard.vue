@@ -1,6 +1,6 @@
 <template>
   <div class="songs-row grid" v-infinite-scroll="loadMore" infinite-scroll-disabled="scrollLoading" infinite-scroll-distance="10" infinite-scroll-immediate-check="false">
-    <div class="col-1-5 clearfix" v-for="(item, index) in cardList" :index="index">
+    <div class="col-1-5 clearfix" v-for="(item, index) in cardList" :index="index" :key="index">
       <div class="card song-card">
         <div class="song-card-image" :style="{ backgroundImage: 'url(' + item.artwork_url + ')'}" @click='tooglePlay(index)'>
           <div class="toggle-play-button" :class="{'active': item.isActive, 'is-playing': item.isPlaying}">

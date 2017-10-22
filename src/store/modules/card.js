@@ -3,7 +3,6 @@ import * as constants from '../config'
 
 import axios from 'axios'
 
-// initial state
 const state = {
   cardList: [],
   nextHref: '',
@@ -15,7 +14,6 @@ const state = {
   currentPage: 1
 }
 
-// getters
 const getters = {
   cardList: state => state.cardList,
   scrollLoading: state => state.scrollLoading,
@@ -23,11 +21,10 @@ const getters = {
   formateList: state => state.formateList
 }
 
-// actions
 const actions = {
   // mutation 不能异步；state要在mutation里修改
   getData: ({ commit }, index) => {
-    commit(types.CLEAR_DATA, {type: index})
+    commit(types.CLEAR_DATA, { type: index })
     axios.get(constants.API + '&tags=' + constants.TYPE[index] + '%20house')
     .then(response => {
       response.data.collection.forEach(item => {
@@ -70,9 +67,8 @@ const actions = {
   }
 }
 
-// mutations
 const mutations = {
-  [types.FORMAT_RESPONSE] (state, {para}) {
+  [types.FORMAT_RESPONSE] (state, { para }) {
     para.isActive = false
     para.isPlaying = false
     para.artwork_url = ''
@@ -81,20 +77,18 @@ const mutations = {
   [types.GET_CURRENT_PAGE] (state) {
     state.currentPage ++
   },
-  [types.GET_DATA] (state, {list, href}) {
+  [types.GET_DATA] (state, { list, href }) {
     state.nextData = list
     state.nextHref = href
   },
   [types.FORMAT_SONG_TITLE] (state) {
     state.nextData.forEach(item => {
-      if (!item.title) {
-        return ''
-      }
+      if (!item.title) return ''
       const arr = item.title.replace('–', '-').split(' - ')
       item.title = arr[arr.length - 1].split(' (')[0]
     })
   },
-  [types.CHANGE_IMG_URL] (state, {imgData}) {
+  [types.CHANGE_IMG_URL] (state, { imgData }) {
     for (let i = 0; i < state.width; i++) {
       state.nextData[i].artwork_url = imgData[i].image_url
       state.nextData[i].user.avatar_url = imgData[i].image_url
@@ -102,10 +96,10 @@ const mutations = {
     // 这里得到最终需要渲染的数据
     state.cardList = state.cardList.concat(state.nextData)
   },
-  [types.GET_WIDTH] (state, {width}) {
+  [types.GET_WIDTH] (state, { width }) {
     state.width = width
   },
-  [types.CHANGE_NEXT_DATA] (state, {data, href}) {
+  [types.CHANGE_NEXT_DATA] (state, { data, href }) {
     state.nextData = data
     state.nextHref = href
     state.scrollLoading = false
@@ -114,7 +108,7 @@ const mutations = {
     state.scrollLoading = true
   },
   // router
-  [types.CLEAR_DATA] (state, {type}) {
+  [types.CLEAR_DATA] (state, { type }) {
     state.cardList = []
     // toolbar type的修改
     state.typeNow = type

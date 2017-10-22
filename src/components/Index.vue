@@ -10,7 +10,6 @@ import Card from './SongCard'
 import Spinner from './Spinner'
 
 export default {
-  name: 'hello',
   data () {
     return {
       type: 'chill'
