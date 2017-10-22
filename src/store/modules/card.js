@@ -3,7 +3,6 @@ import * as constants from '../config'
 
 import axios from 'axios'
 
-// initial state
 const state = {
   cardList: [],
   nextHref: '',
@@ -15,7 +14,6 @@ const state = {
   currentPage: 1
 }
 
-// getters
 const getters = {
   cardList: state => state.cardList,
   scrollLoading: state => state.scrollLoading,
@@ -23,7 +21,6 @@ const getters = {
   formateList: state => state.formateList
 }
 
-// actions
 const actions = {
   // mutation 不能异步；state要在mutation里修改
   getData: ({ commit }, index) => {
@@ -70,7 +67,6 @@ const actions = {
   }
 }
 
-// mutations
 const mutations = {
   [types.FORMAT_RESPONSE] (state, { para }) {
     para.isActive = false

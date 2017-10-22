@@ -1,6 +1,5 @@
 import * as types from '../mutation-types'
 
-// initial state
 const state = {
   playList: '',
   playNow: {
@@ -12,14 +11,12 @@ const state = {
   activeNum: 0
 }
 
-// getters
 const getters = {
   playStatus: state => state.playStatus,
   playNow: state => state.playNow,
   playList: state => state.playList
 }
 
-// actions
 const actions = {
   getPlayData: ({ commit, rootState }, index) => {
     commit(types.GET_PLAYLIST, { rootState })
@@ -33,7 +30,6 @@ const actions = {
   }
 }
 
-// mutations
 const mutations = {
   [types.GET_PLAYLIST] (state, { rootState }) {
     state.playList = rootState.card.cardList
