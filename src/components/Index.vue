@@ -1,8 +1,7 @@
-<template>
-  <div class="content">
-    <Card></Card>
-    <Spinner></Spinner>
-  </div>
+<template lang="pug">
+  div(class="content")
+    Card
+    Spinner
 </template>
 
 <script>

@@ -1,70 +1,107 @@
-<template>
-  <div class="player" v-show="playerShow">
-  	<audio :src="playNow.stream_url + '?client_id=e582b63d83a5fb2997d1dbf2f62705da'" ref="audio" :loop="loopOne"></audio>
-    <div class="container">
-      <div class="player-main">
-        <div class="player-section player-info">
-          <img alt="song artwork" class="player-image" :src="playNow.user.avatar_url">
-          <div class="song-card-details">
-            <a class="song-card-title" :title="playNow.title">{{playNow.title}}</a>
-            <a class="song-card-user-username" title="Lulleaux">{{playNow.user.username}}</a>
-          </div>
-        </div>
-        <div class="player-section">
-          <div class="player-button" @click="playNext(playNum - 1)">
-            <i class="icon ion-ios-rewind"></i>
-          </div>
-          <div class="player-button">
-            <i v-show="!playStatus" class="icon ion-ios-play" @click='play(playNum)'></i>
-            <i v-show="playStatus" class="icon ion-ios-pause" @click='pause(playNum)'></i>
-          </div>
-          <div class="player-button" @click="playNext(playNum + 1)">
-            <i class="icon ion-ios-fastforward"></i>
-          </div>
-        </div>
-        <div class="player-section player-seek">
-          <div class="player-seek-bar-wrap" ref="seekWrap" @click="progressChange($event)">
-            <div class="player-seek-bar" ref="playerSeekBar">
-              <div class="player-seek-duration-bar" :style="{width: durationBar + '%'}">
-                <div class="player-seek-handle" @mousdown="progressChange($event)"></div>
-              </div>
-            </div>
-          </div>
-          <div class="player-time">
-            <span>{{currentTime}}</span>
-            <span class="player-time-divider">/</span>
-            <span>{{duration}}</span>
-          </div>
-        </div>
-        <div class="player-section">
-          <div class="player-button" :class="{ active: loopOne }" @click="repeatOne">
-            <i class="icon ion-loop"></i>
-          </div>
-          <div class="player-button" :class="{ active: random }" @click="randomPlay">
-            <i class="icon ion-shuffle"></i>
-          </div>
-          <div class="player-button top-right popover">
-            <i class="icon ion-android-list"></i>
-          </div>
-          <div class="player-button player-volume-button">
-            <div class="player-volume-button-wrap" @click="muteVolume">
-              <i class="icon ion-android-volume-up"></i>
-              <i class="icon ion-android-volume-mute"></i>
-            </div>
-          </div>
-          <div class="player-volume">
-            <div class="player-seek-bar-wrap" ref="volumeWrap" @click="volumeChange($event)">
-              <div class="player-seek-bar">
-                <div class="player-seek-duration-bar" :style="{ width: volumeDuration + '%' }">
-                  <div class="player-seek-handle"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<template lang="pug">
+  div(
+    v-show="playerShow"
+    class="player"
+  )
+    audio(
+      :src="playNow.stream_url + '?client_id=e582b63d83a5fb2997d1dbf2f62705da'"
+      ref="audio"
+      :loop="loopOne"
+    )
+    div(class="container")
+      div(class="player-main")
+        div(class="player-section player-info")
+          img(
+            class="player-image"
+            :src="playNow.user.avatar_url"
+          )
+          div(class="song-card-details")
+            a(
+              class="song-card-title"
+              :title="playNow.title"
+            ) {{ playNow.title }}
+            a(
+              class="song-card-user-username"
+              title="Lulleaux"
+            ) {{ playNow.user.username }}
+        div(class="player-section")
+          div(
+            class="player-button"
+            @click="playNext(playNum - 1)"
+          )
+            i(class="icon ion-ios-rewind")
+          div(class="player-button")
+            i(
+              v-show="!playStatus"
+              class="icon ion-ios-play"
+              @click='play(playNum)'
+            )
+            i(
+              v-show="playStatus"
+              class="icon ion-ios-pause"
+              @click='pause(playNum)'
+            )
+          div(
+            class="player-button"
+            @click="playNext(playNum + 1)"
+          )
+            i(class="icon ion-ios-fastforward")
+        div(class="player-section player-seek")
+          div(
+            class="player-seek-bar-wrap"
+            ref="seekWrap"
+            @click="progressChange($event)"
+          )
+            div(
+              class="player-seek-bar"
+              ref="playerSeekBar"
+            )
+              div(
+                class="player-seek-duration-bar"
+                :style="{width: durationBar + '%'}"
+              )
+                div(
+                  class="player-seek-handle"
+                  @mousdown="progressChange($event)"
+                )
+          div(class="player-time")
+            span {{ currentTime }}
+            span(class="player-time-divider")
+            span {{ duration  }}
+        div(class="player-section")
+          div(
+            class="player-button"
+            :class="{ active: loopOne }"
+            @click="repeatOne"
+          )
+            i(class="icon ion-loop")
+          div(
+            class="player-button"
+            :class="{ active: random }"
+            @click="randomPlay"
+          )
+            i(class="icon ion-shuffle")
+          div(class="player-button top-right popover")
+            i(class="icon ion-android-list")
+
+          div(class="player-button player-volume-button")
+            div(
+              class="player-volume-button-wrap"
+              @click="muteVolume"
+            )
+              i(class="icon ion-android-volume-up")
+              i(class="icon ion-android-volume-mute")
+          div(class="player-volume")
+            div(
+              class="player-seek-bar-wrap"
+              ref="volumeWrap"
+              @click="volumeChange($event)"
+            )
+              div(class="player-seek-bar")
+                div(class="player-seek-duration-bar"
+                :style="{ width: volumeDuration + '%' }"
+              )
+                div(class="player-seek-handle")
 </template>
 
 <script>

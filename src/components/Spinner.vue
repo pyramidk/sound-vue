@@ -1,13 +1,11 @@
-<template>
-  <div class="spinner-container">
-    <div class="spinner">
-    <div class="rect1"></div>
-    <div class="rect2"></div>
-    <div class="rect3"></div>
-    <div class="rect4"></div>
-    <div class="rect5"></div>
-  </div>
-</div>
+<template lang="pug">
+  div(class="spinner-container")
+    div(class="spinner")
+      div(class="rect1")
+      div(class="rect2")
+      div(class="rect3")
+      div(class="rect4")
+      div(class="rect5")
 </template>
 
 <script>

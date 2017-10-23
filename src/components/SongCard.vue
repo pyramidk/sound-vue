@@ -1,26 +1,45 @@
-<template>
-  <div class="songs-row grid" v-infinite-scroll="loadMore" infinite-scroll-disabled="scrollLoading" infinite-scroll-distance="10" infinite-scroll-immediate-check="false">
-    <div class="col-1-5 clearfix" v-for="(item, index) in cardList" :index="index" :key="index">
-      <div class="card song-card">
-        <div class="song-card-image" :style="{ backgroundImage: 'url(' + item.artwork_url + ')'}" @click='tooglePlay(index)'>
-          <div class="toggle-play-button" :class="{'active': item.isActive, 'is-playing': item.isPlaying}">
-            <i class="toggle-play-button-icon ion-ios-play"></i>
-            <i class="toggle-play-button-icon ion-radio-waves"></i>
-          </div>
-        </div>
-        <div class="song-card-user">
-          <img alt="user avatar" class="song-card-user-image" :src=item.user.avatar_url>
-          <div class="song-card-details">
-            <a class="song-card-title" :title=item.title>{{item.title}}</a>
-            <a class="song-card-user-username" :title=item.user.username>{{item.user.username}}</a>
-            <div class="song-heart song-card-heart popover ">
-              <i class="icon ion-ios-heart"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<template lang="pug">
+  div(
+    class="songs-row grid"
+    v-infinite-scroll="loadMore"
+    infinite-scroll-disabled="scrollLoading"
+    infinite-scroll-distance="10"
+    infinite-scroll-immediate-check="false"
+  )
+    div(
+      v-for="(item, index) in cardList"
+      class="col-1-5 clearfix"
+      :index="index"
+      :key="index"
+    )
+      div(class="card song-card")
+        div(
+          class="song-card-image"
+          :style="{ backgroundImage: 'url(' + item.artwork_url + ')'}"
+          @click='tooglePlay(index)'
+        )
+          div(
+            class="toggle-play-button"
+            :class="{'active': item.isActive, 'is-playing': item.isPlaying}"
+          )
+            i(class="toggle-play-button-icon ion-ios-play")
+            i(class="toggle-play-button-icon ion-radio-waves")
+        div(class="song-card-user")
+          img(
+            class="song-card-user-image"
+            :src="item.user.avatar_url"
+          )
+          div(class="song-card-details")
+            a(
+              class="song-card-title"
+              :title="item.title"
+            ) {{ item.title }}
+            a(
+              class="song-card-user-username"
+              :title="item.user.username"
+            ) {{ item.user.username }}
+            div(class="song-heart song-card-heart popover")
+              i(class="icon ion-ios-heart")
 </template>
 
 <script>
