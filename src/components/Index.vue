@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     getData (index) {
-      this.$store.dispatch('getData', index)
+      this.$store.dispatch('getMusicList', index)
     }
   },
   components: {

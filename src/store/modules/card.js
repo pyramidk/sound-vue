@@ -22,42 +22,42 @@ const getters = {
 }
 
 const actions = {
-  // mutation 不能异步；state要在mutation里修改
-  getData: ({ commit }, index) => {
+  getMusicList: ({ commit }, index) => {
     commit(types.CLEAR_DATA, { type: index })
-    axios.get(constants.API + '&tags=' + constants.TYPE[index] + '%20house')
-    .then(response => {
-      response.data.collection.forEach(item => {
-        commit(types.FORMAT_RESPONSE, {para: item})
+    axios.get(`${constants.API}&tags=${constants.TYPE[index]}`)
+      .then(resp => {
+        resp.data.collection.forEach(item => {
+          commit(types.FORMAT_RESPONSE, { para: item })
+        })
+        commit(types.GET_WIDTH, { width: resp.data.collection.length })
+        commit(types.GET_DATA, { list: resp.data.collection, href: resp.data.next_href })
+        commit(types.FORMAT_SONG_TITLE)
+      }, response => {
+        console.log('请求出错')
       })
-      commit(types.GET_WIDTH, {width: response.data.collection.length})
-      commit(types.GET_DATA, {list: response.data.collection, href: response.data.next_href})
-      commit(types.FORMAT_SONG_TITLE)
-      // 添加了其他图片API，所以先注释掉
-      // commit(types.FORMAT_IMG_URL)
-    }, response => {
-      console.log('请求出错')
-    })
-    .then(() => {
-      axios.get(constants.IMAGEAPI + constants.TYPE[index] + '&rpp=40' + '&image_size=440&consumer_key=bSMgHdOHOQICt1q6gkNCumjh1hsLzkn9gmEZ3zcv').then(response => {
-        commit(types.CHANGE_IMG_URL, {imgData: response.data.photos})
+      .then(() => {
+        axios.get(`${constants.IMAGEAPI}${constants.TYPE[index]}&rpp=40&image_size=440&consumer_key=bSMgHdOHOQICt1q6gkNCumjh1hsLzkn9gmEZ3zcv`)
+          .then(resp => {
+            commit(types.CHANGE_IMG_URL, { imgData: resp.data.photos })
+          })
       })
-    })
   },
   loadMore: ({ commit }) => {
-    axios.get(state.nextHref).then(response => {
-      response.data.collection.forEach(item => {
-        commit(types.FORMAT_RESPONSE, {para: item})
+    axios.get(state.nextHref)
+      .then(resp => {
+        resp.data.collection.forEach(item => {
+          commit(types.FORMAT_RESPONSE, { para: item })
+        })
+        commit(types.GET_WIDTH, { width: resp.data.collection.length })
+        commit(types.CHANGE_NEXT_DATA, { data: resp.data.collection, href: resp.data.next_href })
       })
-      commit(types.GET_WIDTH, {width: response.data.collection.length})
-      commit(types.CHANGE_NEXT_DATA, {data: response.data.collection, href: response.data.next_href})
-    })
-    .then(() => {
-      commit(types.GET_CURRENT_PAGE)
-      axios.get(constants.IMAGEAPI + state.typeNow + '&rpp=40' + '&image_size=440&consumer_key=bSMgHdOHOQICt1q6gkNCumjh1hsLzkn9gmEZ3zcv' + '&page=' + state.currentPage).then(response => {
-        commit(types.CHANGE_IMG_URL, {imgData: response.data.photos})
+      .then(() => {
+        commit(types.GET_CURRENT_PAGE)
+        axios.get(constants.IMAGEAPI + state.typeNow + '&rpp=40' + '&image_size=440&consumer_key=bSMgHdOHOQICt1q6gkNCumjh1hsLzkn9gmEZ3zcv' + '&page=' + state.currentPage)
+          .then(resp => {
+            commit(types.CHANGE_IMG_URL, { imgData: resp.data.photos })
+          })
       })
-    })
   },
   loadStop: ({ commit }) => {
     commit(types.RECOVER_SCROLL)
@@ -112,11 +112,6 @@ const mutations = {
     state.cardList = []
     // toolbar type的修改
     state.typeNow = type
-  },
-  [types.FORMAT_IMG_URL] (state) {
-    state.nextData.forEach(item => {
-      if (item.artwork_url) item.artwork_url = item.artwork_url.replace('large', 't300x300')
-    })
   }
 }
 
