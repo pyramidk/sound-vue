@@ -1,3 +1,4 @@
+import * as aTypes from '../action-types'
 import * as types from '../mutation-types'
 import * as constants from '../config'
 
@@ -22,7 +23,7 @@ const getters = {
 }
 
 const actions = {
-  getMusicList: ({ commit }, index) => {
+  [aTypes.GET_MUSIC_LIST]: ({ commit }, index) => {
     commit(types.CLEAR_DATA, { type: index })
     axios.get(`${constants.API}&tags=${constants.TYPE[index]}`)
       .then(resp => {
@@ -110,7 +111,6 @@ const mutations = {
   // router
   [types.CLEAR_DATA] (state, { type }) {
     state.cardList = []
-    // toolbar type的修改
     state.typeNow = type
   }
 }

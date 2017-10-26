@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import * as aTypes from '../store/action-types'
 import Card from './SongCard'
 import Spinner from './Spinner'
 
@@ -25,7 +26,7 @@ export default {
   },
   methods: {
     getData (index) {
-      this.$store.dispatch('getMusicList', index)
+      this.$store.dispatch(aTypes.GET_MUSIC_LIS, index)
     }
   },
   components: {
