@@ -106,6 +106,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import * as aTypes from '../store/action-types'
 
 export default {
   data () {
@@ -124,7 +125,7 @@ export default {
   },
   methods: {
     play (index) {
-      this.$store.dispatch('play', index)
+      this.$store.dispatch(aTypes.MUSIC_PLAY, index)
       this.$nextTick(() => {
         console.log('开始播放')
         this.$refs.audio.play()
@@ -136,7 +137,7 @@ export default {
       if (!this.playerShow) this.playerShow = true
     },
     pause (index) {
-      this.$store.dispatch('pause')
+      this.$store.dispatch(aTypes.MUSIC_STOP)
       this.$refs.audio.pause()
       clearInterval(this.clear)
       console.log('暂停播放')

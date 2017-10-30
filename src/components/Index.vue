@@ -10,6 +10,10 @@ import Card from './SongCard'
 import Spinner from './Spinner'
 
 export default {
+  components: {
+    Card,
+    Spinner
+  },
   data () {
     return {
       type: 'chill'
@@ -18,20 +22,11 @@ export default {
   watch: {
     '$route' (to, from) {
       this.type = to.params.id
-      this.getData(this.type)
+      this.$store.dispatch(aTypes.GET_MUSIC_LIST, this.type)
     }
   },
   mounted () {
-    this.getData(this.type)
-  },
-  methods: {
-    getData (index) {
-      this.$store.dispatch(aTypes.GET_MUSIC_LIS, index)
-    }
-  },
-  components: {
-    Card,
-    Spinner
+    this.$store.dispatch(aTypes.GET_MUSIC_LIST, this.type)
   }
 }
 </script>

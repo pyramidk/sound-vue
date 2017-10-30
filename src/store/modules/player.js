@@ -1,4 +1,5 @@
-import * as types from '../mutation-types'
+import * as aTypes from '../action-types'
+import * as mTypes from '../mutation-types'
 
 const state = {
   playList: '',
@@ -19,25 +20,25 @@ const getters = {
 
 const actions = {
   getPlayData: ({ commit, rootState }, index) => {
-    commit(types.GET_PLAYLIST, { rootState })
-    commit(types.GET_PLAY_NOW, { index: index })
+    commit(mTypes.GET_PLAYLIST, { rootState })
+    commit(mTypes.GET_PLAY_NOW, { index: index })
   },
-  play: ({ commit, rootState }, index) => {
-    commit(types.CHANGE_TO_PLAY, { rootState, index: index })
+  [aTypes.MUSIC_PLAY] ({ commit, rootState }, index) {
+    commit(mTypes.CHANGE_TO_PLAY, { rootState, index: index })
   },
-  pause: ({ commit, rootState }) => {
-    commit(types.CHANGE_TO_PAUSE, { rootState })
+  [aTypes.MUSIC_STOP] ({ commit, rootState }) {
+    commit(mTypes.CHANGE_TO_PAUSE, { rootState })
   }
 }
 
 const mutations = {
-  [types.GET_PLAYLIST] (state, { rootState }) {
+  [mTypes.GET_PLAYLIST] (state, { rootState }) {
     state.playList = rootState.card.cardList
   },
-  [types.GET_PLAY_NOW] (state, { index }) {
+  [mTypes.GET_PLAY_NOW] (state, { index }) {
     state.playNow = state.playList[index]
   },
-  [types.CHANGE_TO_PLAY] (state, { rootState, index }) {
+  [mTypes.CHANGE_TO_PLAY] (state, { rootState, index }) {
     state.playStatus = true
     // active
     if (state.activeNum !== index || state.activeNum === 0) {
@@ -52,7 +53,7 @@ const mutations = {
       rootState.card.cardList[index].isPlaying = true
     }
   },
-  [types.CHANGE_TO_PAUSE] (state, { rootState }) {
+  [mTypes.CHANGE_TO_PAUSE] (state, { rootState }) {
     state.playStatus = false
     // playing相关
     rootState.card.cardList[state.activeNum].isPlaying = false

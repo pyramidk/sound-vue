@@ -60,9 +60,7 @@ export default {
     playHandler (index) {
       this.index = index
       this.$store.dispatch('getPlayData', index)
-      /* 问题：获取其它组件的refs */
       this.$parent.$parent.$children.forEach(item => {
-        // 执行player.vue的play方法
         if (item.$refs.audio) item.play(index)
       })
     },

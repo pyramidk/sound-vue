@@ -11,15 +11,13 @@ const state = {
   scrollLoading: false,
   typeNow: 'chill',
   width: 10,
-  formateList: [],
   currentPage: 1
 }
 
 const getters = {
   cardList: state => state.cardList,
   scrollLoading: state => state.scrollLoading,
-  typeNow: state => state.typeNow,
-  formateList: state => state.formateList
+  typeNow: state => state.typeNow
 }
 
 const actions = {
