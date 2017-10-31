@@ -12,12 +12,6 @@ const state = {
   activeNum: 0
 }
 
-const getters = {
-  playStatus: state => state.playStatus,
-  playNow: state => state.playNow,
-  playList: state => state.playList
-}
-
 const actions = {
   getPlayData: ({ commit, rootState }, index) => {
     commit(mTypes.GET_PLAYLIST, { rootState })
@@ -62,7 +56,6 @@ const mutations = {
 
 export default {
   state,
-  getters,
   actions,
   mutations
 }

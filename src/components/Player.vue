@@ -105,7 +105,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import * as aTypes from '../store/action-types'
 
 export default {
@@ -121,6 +120,17 @@ export default {
       durationBar: 0,
       barWidth: 0,
       volumeDuration: 50
+    }
+  },
+  computed: {
+    playStatus () {
+      return this.$store.state.player.playStatus
+    },
+    playNow () {
+      return this.$store.state.player.playNow
+    },
+    playList () {
+      return this.$store.state.player.playList
     }
   },
   methods: {
@@ -208,11 +218,6 @@ export default {
       this.volumeDuration = percent * 100
     }
   },
-  computed: mapGetters([
-    'playNow',
-    'playStatus',
-    'playList'
-  ])
 }
 </script>
 
