@@ -29,12 +29,21 @@ const actions = {
     commit(mTypes.CLEAR_DATA, { type: index })
     axios.get(`${API}&tags=${TYPE[index]}`)
       .then(resp => {
-        resp.data.collection.forEach(item => {
-          commit(mTypes.FORMAT_RESPONSE, { para: item })
+        const songs = resp.data.collection.map(item => {
+          return {
+            ...item,
+            [item.isActive]: false,
+            [item.isPlaying]: false,
+            [item.artwork_url]: '',
+            [item.user.avatar_url]: ''
+          }
         })
-        commit(mTypes.GET_WIDTH, { width: resp.data.collection.length })
-        commit(mTypes.GET_DATA, { list: resp.data.collection, href: resp.data.next_href })
-        commit(mTypes.FORMAT_SONG_TITLE)
+        // commit(mTypes.GET_WIDTH, { width: resp.data.collection.length })
+        commit(mTypes.GET_DATA, {
+          list: songs,
+          href: resp.data.next_href
+        })
+        // commit(mTypes.FORMAT_SONG_TITLE)
       }, response => {
         console.log('请求出错')
       })
@@ -48,11 +57,17 @@ const actions = {
   loadMore: ({ commit }) => {
     axios.get(state.nextHref)
       .then(resp => {
-        resp.data.collection.forEach(item => {
-          commit(mTypes.FORMAT_RESPONSE, { para: item })
+        const songs = resp.data.collection.map(item => {
+          return {
+            ...item,
+            [item.isActive]: false,
+            [item.isPlaying]: false,
+            [item.artwork_url]: '',
+            [item.user.avatar_url]: ''
+          }
         })
         commit(mTypes.GET_WIDTH, { width: resp.data.collection.length })
-        commit(mTypes.CHANGE_NEXT_DATA, { data: resp.data.collection, href: resp.data.next_href })
+        commit(mTypes.CHANGE_NEXT_DATA, { data: songs, href: resp.data.next_href })
       })
       .then(() => {
         commit(mTypes.GET_CURRENT_PAGE)
@@ -71,12 +86,6 @@ const actions = {
 }
 
 const mutations = {
-  [mTypes.FORMAT_RESPONSE] (state, { para }) {
-    para.isActive = false
-    para.isPlaying = false
-    para.artwork_url = ''
-    para.user.avatar_url = ''
-  },
   [mTypes.GET_CURRENT_PAGE] (state) {
     state.currentPage ++
   },
@@ -96,7 +105,6 @@ const mutations = {
       state.nextData[i].artwork_url = imgData[i].image_url
       state.nextData[i].user.avatar_url = imgData[i].image_url
     }
-    // 这里得到最终需要渲染的数据
     state.cardList = state.cardList.concat(state.nextData)
   },
   [mTypes.GET_WIDTH] (state, { width }) {
