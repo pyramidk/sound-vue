@@ -1,11 +1,11 @@
-# SoundClound
+# SoundCloud
 
-> 用Vue/Vuex写的SoundClound客户端，[在线访问](https://pyramidk.github.io/sound-vue/#/)请自备翻墙梯子，因为SoundClound资源被墙。
+> 用Vue/Vuex写的SoundCloud客户端，SoundCloud资源不好用了，准备换网易云的试试。
 
 ## 使用
 
 ```
-1. npm install 
+1. npm install
 
 2. npm run dev
 
