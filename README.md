@@ -1,7 +1,6 @@
 # SoundCloud
 
-> 用Vue/Vuex写的SoundCloud客户端，SoundCloud资源不好用了，准备换网易云的试试。
-
+> 用Vue/Vuex写的SoundCloud客户端
 ## 使用
 
 ```
